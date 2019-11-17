@@ -1,0 +1,22 @@
+CREATE TABLE CLIENTE(
+  idCliente Number(10)  NOT NULL,
+  Nome Varchar2(100) NOT NULL,
+  UF Varchar2(2) NOT NULL,
+  Celular Varchar2(16) NOT NULL,
+  idFinanciamento Number(10) NOT NULL,
+ CONSTRAINT PK_CLIENTE PRIMARY KEY 
+(
+  idCliente 
+) 
+);
+
+
+-- Generate ID using sequence and trigger
+CREATE SEQUENCE CLIENTE_seq START WITH 1 INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER CLIENTE_seq_tr
+ BEFORE INSERT ON CLIENTE FOR EACH ROW
+ WHEN (NEW.idCliente IS NULL)
+BEGIN
+ SELECT CLIENTE_seq.NEXTVAL INTO :NEW.idCliente FROM DUAL;
+END;
